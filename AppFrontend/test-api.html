@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+        }
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+        }
+        .loading {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ff9800;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IELTS API Test Tool</h1>
+        <p>This tool tests the IELTS testbyparts API endpoints to diagnose any connectivity issues.</p>
+        
+        <div class="test-section">
+            <h2>Table Completion (A-T1 to A-T10)</h2>
+            <button onclick="testTableCompletion()">Test Table Completion API</button>
+            <div id="tableResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Form Completion (B-T1 to B-T10)</h2>
+            <button onclick="testFormCompletion()">Test Form Completion API</button>
+            <div id="formResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Multiple Endpoints Test</h2>
+            <button onclick="testMultipleEndpoints()">Test Multiple Random Endpoints</button>
+            <div id="multipleResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Network Diagnostics</h2>
+            <button onclick="runNetworkDiagnostics()">Run Network Diagnostics</button>
+            <div id="diagnosticsResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://q96vyw8ux1.execute-api.us-east-1.amazonaws.com/prod/testbyparts';
+        
+        function setResult(elementId, content, type = 'loading') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            element.className = `result ${type}`;
+        }
+        
+        async function testAPI(endpoint, resultElementId, description) {
+            setResult(resultElementId, `Testing ${description}...\nEndpoint: ${endpoint}`, 'loading');
+            
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors'
+                });
+                
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}\n${errorText}`);
+                }
+                
+                const data = await response.json();
+                
+                const result = `✅ SUCCESS - ${description}
+Response Time: ${responseTime}ms
+Status: ${response.status} ${response.statusText}
+Content-Type: ${response.headers.get('content-type')}
+
+Test Data Preview:
+- Test ID: ${data.testData?.testId || 'N/A'}
+- Question Type: ${data.testData?.questionType || 'N/A'}
+- Audio URL: ${data.audioUrl || 'N/A'}
+- Has Instructions: ${data.testData?.instructions ? 'Yes' : 'No'}
+
+Full Response (first 500 chars):
+${JSON.stringify(data, null, 2).substring(0, 500)}...`;
+                
+                setResult(resultElementId, result, 'success');
+                return { success: true, responseTime, data };
+                
+            } catch (error) {
+                const result = `❌ FAILED - ${description}
+Error: ${error.message}
+Stack: ${error.stack}
+
+Possible causes:
+- CORS policy blocking the request
+- Network connectivity issues
+- API server temporarily unavailable
+- Content Security Policy restrictions`;
+                
+                setResult(resultElementId, result, 'error');
+                return { success: false, error: error.message };
+            }
+        }
+        
+        async function testTableCompletion() {
+            const randomTest = Math.floor(Math.random() * 10) + 1;
+            const testCode = `A-T${randomTest}`;
+            const endpoint = `${API_BASE_URL}/${testCode}`;
+            await testAPI(endpoint, 'tableResult', `Table Completion (${testCode})`);
+        }
+        
+        async function testFormCompletion() {
+            const randomTest = Math.floor(Math.random() * 10) + 1;
+            const testCode = `B-T${randomTest}`;
+            const endpoint = `${API_BASE_URL}/${testCode}`;
+            await testAPI(endpoint, 'formResult', `Form Completion (${testCode})`);
+        }
+        
+        async function testMultipleEndpoints() {
+            setResult('multipleResult', 'Testing multiple endpoints...', 'loading');
+            
+            const testCodes = ['A-T1', 'A-T5', 'B-T3', 'C-T2', 'D-T4'];
+            const results = [];
+            
+            for (const testCode of testCodes) {
+                const endpoint = `${API_BASE_URL}/${testCode}`;
+                const result = await testAPI(endpoint, 'multipleResult', `Testing ${testCode}...`);
+                results.push({ testCode, ...result });
+            }
+            
+            const successful = results.filter(r => r.success).length;
+            const avgResponseTime = results
+                .filter(r => r.success)
+                .reduce((sum, r) => sum + r.responseTime, 0) / successful;
+            
+            const summary = `📊 MULTIPLE ENDPOINT TEST SUMMARY
+Total Tests: ${results.length}
+Successful: ${successful}
+Failed: ${results.length - successful}
+Success Rate: ${(successful / results.length * 100).toFixed(1)}%
+Average Response Time: ${avgResponseTime.toFixed(0)}ms
+
+Detailed Results:
+${results.map(r => 
+    `${r.testCode}: ${r.success ? '✅' : '❌'} ${r.success ? r.responseTime + 'ms' : r.error}`
+).join('\n')}`;
+            
+            setResult('multipleResult', summary, successful === results.length ? 'success' : 'error');
+        }
+        
+        async function runNetworkDiagnostics() {
+            setResult('diagnosticsResult', 'Running network diagnostics...', 'loading');
+            
+            const diagnostics = {
+                userAgent: navigator.userAgent,
+                connection: navigator.connection ? {
+                    effectiveType: navigator.connection.effectiveType,
+                    downlink: navigator.connection.downlink,
+                    rtt: navigator.connection.rtt
+                } : 'N/A',
+                cookiesEnabled: navigator.cookieEnabled,
+                onLine: navigator.onLine,
+                language: navigator.language,
+                platform: navigator.platform,
+                vendor: navigator.vendor,
+                currentTime: new Date().toISOString(),
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screenResolution: `${screen.width}x${screen.height}`,
+                windowSize: `${window.innerWidth}x${window.innerHeight}`,
+                corsSupport: 'fetch' in window ? 'Supported' : 'Not Supported',
+                serviceWorkerSupport: 'serviceWorker' in navigator ? 'Supported' : 'Not Supported'
+            };
+            
+            // Test basic connectivity
+            try {
+                const testFetch = await fetch('https://httpbin.org/get', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                diagnostics.basicConnectivity = testFetch.ok ? 'Working' : 'Issues detected';
+            } catch (e) {
+                diagnostics.basicConnectivity = `Failed: ${e.message}`;
+            }
+            
+            const report = `🔍 NETWORK DIAGNOSTICS REPORT
+
+Browser Information:
+- User Agent: ${diagnostics.userAgent}
+- Platform: ${diagnostics.platform}
+- Language: ${diagnostics.language}
+- Cookies Enabled: ${diagnostics.cookiesEnabled}
+- Online Status: ${diagnostics.onLine}
+
+Network Information:
+- Connection Type: ${JSON.stringify(diagnostics.connection)}
+- Basic Connectivity: ${diagnostics.basicConnectivity}
+- CORS Support: ${diagnostics.corsSupport}
+- Service Worker Support: ${diagnostics.serviceWorkerSupport}
+
+System Information:
+- Current Time: ${diagnostics.currentTime}
+- Timezone: ${diagnostics.timezone}
+- Screen Resolution: ${diagnostics.screenResolution}
+- Window Size: ${diagnostics.windowSize}
+
+Recommendations:
+1. Ensure stable internet connection
+2. Check if any browser extensions are blocking requests
+3. Verify Content Security Policy allows API domain
+4. Try testing in incognito/private mode
+5. Check browser console for additional error details`;
+            
+            setResult('diagnosticsResult', report, 'success');
+        }
+        
+        // Auto-run a quick test on page load
+        window.addEventListener('load', () => {
+            setTimeout(testTableCompletion, 1000);
+        });
+    </script>
+</body>
+</html> 

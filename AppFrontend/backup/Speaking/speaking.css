@@ -1,0 +1,707 @@
+/* Speaking Test Styles - Modern Edition */
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  --primary-color: #4f46e5;
+  --secondary-color: #8b5cf6;
+  --accent-color: #ec4899;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --border-light: #e2e8f0;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Modern Card styling for questions */
+.speaking-question-card {
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-light);
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  background-color: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.speaking-question-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.speaking-question-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--secondary-gradient);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.speaking-question-card:hover::before {
+  opacity: 1;
+}
+
+.speaking-question-card h2 {
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Microphone button styling - Modern */
+.mic-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  background: var(--secondary-gradient);
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.mic-button:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.mic-button.recording {
+  background: var(--error-color);
+  animation: pulse 1.5s infinite;
+  transform: scale(1.05);
+}
+
+.mic-button.recording:hover {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.mic-button:after {
+  content: 'Click to speak';
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.mic-button:hover:after {
+  opacity: 1;
+}
+
+.mic-button.recording:after {
+  content: 'Recording...';
+  color: var(--error-color);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.mic-button.recording::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 1.5s infinite;
+}
+
+/* Add a pulsing dot effect for recording state */
+.mic-button.recording:after {
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Enhance ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Part 2 cue card styling - Enhanced */
+.cue-card {
+  background: linear-gradient(to right, var(--bg-secondary), white);
+  border-radius: 1rem;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cue-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--primary-gradient);
+}
+
+.cue-card h2 {
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+.cue-item {
+  margin-bottom: 1rem;
+  position: relative;
+  padding-left: 2rem;
+  transition: transform var(--transition-fast);
+}
+
+.cue-item:hover {
+  transform: translateX(5px);
+}
+
+.cue-item:before {
+  content: "•";
+  position: absolute;
+  left: 0.5rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Transcription area styling - Enhanced */
+.transcription-area {
+  background-color: var(--bg-tertiary);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.transcription-area::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--secondary-gradient);
+  opacity: 0.5;
+}
+
+.transcription-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.transcription-text {
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+/* Navigation buttons - Enhanced */
+.nav-button {
+  transition: all var(--transition-normal);
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform var(--transition-normal);
+  z-index: -1;
+}
+
+.nav-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:hover::before {
+  transform: translateX(0);
+}
+
+/* Animation for recording indicator - Enhanced */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .mic-button {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .mic-button:after {
+    bottom: -30px;
+    font-size: 10px;
+  }
+  
+  .speaking-question-card h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Feedback page animations - Enhanced */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes grow-width {
+  from {
+    width: 0;
+    opacity: 0.5;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Progress bar animation for loading state */
+@keyframes progress {
+  0% {
+    width: 0%;
+    background-position: 0% 50%;
+  }
+  50% {
+    width: 70%;
+    background-position: 100% 50%;
+  }
+  100% {
+    width: 95%;
+    background-position: 0% 50%;
+  }
+}
+
+/* Ellipsis animations for loading state */
+@keyframes ellipsis-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Add the animate-fade-in animation if it doesn't exist */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-grow-width {
+  animation: grow-width 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out forwards;
+}
+
+/* Loading animation classes */
+.animate-progress {
+  animation: progress 2s ease-in-out infinite;
+  background-size: 200% 200%;
+}
+
+.animate-ellipsis-1 {
+  animation: ellipsis-bounce 1s infinite;
+  animation-delay: 0s;
+}
+
+.animate-ellipsis-2 {
+  animation: ellipsis-bounce 1s infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-ellipsis-3 {
+  animation: ellipsis-bounce 1s infinite;
+  animation-delay: 0.4s;
+}
+
+/* Skill meter styling - Enhanced */
+.skill-meter {
+  margin-bottom: 1.5rem;
+}
+
+.skill-meter-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.skill-meter-track {
+  height: 0.6rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.skill-meter-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: var(--primary-gradient);
+}
+
+/* Radar chart styling - Enhanced */
+.radar-chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.radar-chart-axis {
+  stroke: var(--border-light);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 2;
+}
+
+.radar-chart-circle {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.radar-chart-polygon {
+  fill: rgba(79, 70, 229, 0.15);
+  stroke: var(--primary-color);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 4px 6px rgba(79, 70, 229, 0.2));
+}
+
+.radar-chart-point {
+  fill: var(--primary-color);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.radar-chart-label {
+  font-size: 14px;
+  font-weight: 600;
+  fill: var(--text-primary);
+}
+
+/* Feedback card styling - New */
+.feedback-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: var(--card-shadow);
+}
+
+.feedback-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
+}
+
+.feedback-card-header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.feedback-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+}
+
+.feedback-card-content {
+  padding: 1.5rem;
+}
+
+.feedback-card-section {
+  margin-bottom: 1.25rem;
+}
+
+.feedback-card-section:last-child {
+  margin-bottom: 0;
+}
+
+.feedback-card-section-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Tab navigation styling - New */
+.tab-navigation {
+  display: inline-flex;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.tab-button.active {
+  background-color: var(--bg-primary);
+  color: var(--primary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tab-button:not(.active):hover {
+  color: var(--primary-color);
+}
+
+/* Score display styling - New */
+.score-display {
+  position: relative;
+  background: linear-gradient(135deg, #3730a3 0%, #5b21b6 100%);
+  color: white;
+  border-radius: 1.25rem;
+  padding: 1.5rem 2.5rem;
+  box-shadow: 0 15px 30px rgba(79, 70, 229, 0.3);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.score-display::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0.7;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.score-display h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+}
+
+.score-value {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  letter-spacing: -1px;
+}
+
+/* Large microphone button for Part 2 */
+.mic-button-large {
+  background: var(--primary-gradient);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border: 3px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.mic-button-large:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+}
+
+.mic-button-large.recording {
+  background: var(--error-color);
+  animation: pulseLarge 1.5s infinite;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.mic-button-large.recording:hover {
+  transform: scale(1.08) translateY(-3px);
+}
+
+.mic-button-large::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mic-button-large:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.mic-button-large.recording::before {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0);
+  animation: rippleLarge 1.8s infinite;
+}
+
+@keyframes rippleLarge {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseLarge {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* Responsive adjustments for the large mic button */
+@media (max-width: 640px) {
+  .mic-button-large {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .mic-button-large svg {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -1,0 +1,16 @@
+.score-value-text, .score-label-text {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transform: rotate(0deg) !important;
+}
+
+.score-value-text {
+  font-size: 28px;
+  fill: #1e40af;
+  font-weight: 700;
+}
+
+.score-label-text {
+  font-size: 12px;
+  fill: #6b7280;
+} 

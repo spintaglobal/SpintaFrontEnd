@@ -1,0 +1,969 @@
+/* --- Base Styles --- */
+:root {
+    --primary-color: #0052cc; /* Primary blue */
+    --primary-color-dark: #003f9e;
+    --primary-color-light: #e9f2ff;
+    --text-color-primary: #212529;
+    --text-color-secondary: #495057;
+    --text-color-muted: #6c757d;
+    --background-color: #f8f9fa; /* Main background */
+    --content-background: #ffffff;
+    --border-color: #dee2e6;
+    --border-color-light: #e9ecef;
+    --border-radius: 8px;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Countdown Animation Styles */
+.countdown-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.countdown-number {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: var(--content-background);
+  color: var(--primary-color-dark);
+  font-size: 5rem;
+  font-weight: bold;
+  z-index: 5;
+  box-shadow: 0 10px 30px rgba(0, 82, 204, 0.25);
+  animation: floatPulse 1.5s infinite alternate ease-in-out;
+}
+
+.countdown-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.countdown-ring-1 {
+  animation: spinRing 6s linear infinite;
+}
+
+.countdown-ring-2 {
+  animation: spinRingReverse 8s linear infinite;
+}
+
+.countdown-dot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  z-index: 2;
+}
+
+.countdown-sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary-color-light);
+  z-index: 2;
+  box-shadow: 0 0 10px 2px rgba(0, 82, 204, 0.4);
+  opacity: 0;
+}
+
+.countdown-sparkle:nth-child(1) { animation: sparkle 2s infinite 0.1s; }
+.countdown-sparkle:nth-child(2) { animation: sparkle 2s infinite 0.4s; }
+.countdown-sparkle:nth-child(3) { animation: sparkle 2s infinite 0.7s; }
+.countdown-sparkle:nth-child(4) { animation: sparkle 2s infinite 1.0s; }
+.countdown-sparkle:nth-child(5) { animation: sparkle 2s infinite 1.3s; }
+.countdown-sparkle:nth-child(6) { animation: sparkle 2s infinite 1.6s; }
+
+.countdown-message {
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--primary-color-dark);
+  text-align: center;
+  margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: messageAppear 0.6s forwards;
+}
+
+.breath-text {
+  display: inline-block;
+  animation: breathText 4s infinite ease-in-out;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.countdown-go {
+  font-size: 64px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--primary-color-dark);
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: goAppear 0.5s forwards ease-out;
+  text-shadow: 0 5px 15px rgba(0, 82, 204, 0.3);
+}
+
+@keyframes floatPulse {
+  0% {
+    transform: scale(0.97) translateY(3px);
+    box-shadow: 0 5px 15px rgba(0, 82, 204, 0.2);
+  }
+  100% {
+    transform: scale(1.03) translateY(-3px);
+    box-shadow: 0 15px 25px rgba(0, 82, 204, 0.3);
+  }
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinRingReverse {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes goAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes messageAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes breathText {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Global Styles (Applied to ReadingExam.jsx root if needed) */
+body { /* Apply base font to body for better inheritance */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color-primary);
+    line-height: 1.65; /* Improved line height */
+    font-size: 16px; /* Base font size */
+}
+
+.reading-exam-container {
+    max-width: 100vw;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--content-background);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--border-radius);
+    overflow: visible; /* Changed from hidden to allow content to flow */
+    border: 1px solid var(--border-color-light);
+    padding: 0;
+    position: relative; /* Changed from absolute to allow natural document flow */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styling */
+.reading-test-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 25px 35px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.reading-test-header h1 {
+    margin: 0;
+    font-size: 2em; /* Increased from 1.75em */
+    font-weight: 700;
+}
+
+/* Tab Navigation Styling */
+.tab-navigation {
+    display: flex;
+    background-color: var(--content-background);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 30px;
+    position: fixed; /* Keep fixed */
+    top: 0; /* Position at top of page */
+    z-index: 90; /* High, but lower than timer */
+    width: 100%; /* Ensure it spans full width */
+    left: 0; /* Align to left edge */
+    padding-right: 120px; /* Add padding to prevent overlap with timer */
+    height: 53px; /* Fixed height for better alignment with timer */
+    align-items: center; /* Center items vertically */
+}
+.tab-button {
+    padding: 16px 25px; /* Increased from 14px 20px */
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 1.1em; /* Increased from 1.05em */
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    margin-right: 15px; /* Increased from 10px */
+    position: relative;
+    top: 1px;
+}
+.tab-button:hover {
+    color: var(--primary-color);
+}
+.tab-button.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom-color: var(--primary-color);
+}
+
+/* Content Area Header (Below Tabs) */
+.content-header {
+    padding: 22px 35px;
+    background-color: #fdfdff;
+    border-bottom: 1px solid var(--border-color-light);
+    position: fixed; /* Change from sticky to fixed */
+    top: 52px; /* Updated: Position below tabs, adjusted for removed header */
+    z-index: 85;
+    width: 100%; /* Ensure it spans full width */
+    left: 0; /* Align to left edge */
+}
+.content-header h2 {
+    margin: 0;
+    font-size: 1.4em; /* Increased from 1.3em */
+    color: var(--text-color-primary);
+    font-weight: 600;
+}
+
+/* Main Container for Passage and Questions - Add top margin to accommodate fixed headers */
+.test-container {
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    overflow: hidden; /* Changed from visible to hidden */
+    width: 100%; /* Full width */
+    padding: 0; /* No padding to maximize space */
+    height: calc(100vh - 180px); /* Updated: Adjusted height for removed header */
+    min-height: calc(100vh - 180px); /* Updated: Adjusted min-height for removed header */
+    margin-bottom: 70px; /* Add space for buttons at bottom */
+    position: relative; /* Add position relative */
+    margin-top: 104px; /* Updated: Adjusted top margin for removed header */
+}
+
+/* Scrollbar Styling */
+.passage-display::-webkit-scrollbar,
+.question-area::-webkit-scrollbar {
+    width: 10px; /* Increased from 8px */
+}
+.passage-display::-webkit-scrollbar-track,
+.question-area::-webkit-scrollbar-track {
+    background: var(--border-color-light);
+    border-radius: 4px;
+}
+.passage-display::-webkit-scrollbar-thumb,
+.question-area::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+    border: 2px solid var(--border-color-light);
+}
+.passage-display::-webkit-scrollbar-thumb:hover,
+.question-area::-webkit-scrollbar-thumb:hover {
+    background-color: #adb5bd;
+}
+
+/* Passage Display Area */
+.passage-display {
+    flex: 1 1 50%; /* Equal space with questions */
+    padding: 40px; /* Keeping increased padding for better readability */
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: var(--content-background);
+    height: 100%; /* Use full height of container */
+    max-width: 50%; /* Ensure it doesn't expand beyond half the container */
+    word-wrap: break-word; /* Ensure long words break and wrap */
+    position: absolute; /* Position absolutely */
+    left: 0; /* Align to left */
+    top: 0; /* Align to top */
+    bottom: 0; /* Stretch to bottom */
+    width: 50%; /* Set width to 50% */
+}
+.passage-text-block {
+    margin-bottom: 40px; /* Increased from 35px */
+    border-bottom: 1px dashed var(--border-color-light);
+    padding-bottom: 30px; /* Increased from 25px */
+}
+.passage-text-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.passage-text-block h3 { /* Short text titles */
+    margin-top: 0;
+    margin-bottom: 20px; /* Increased from 18px */
+    color: var(--primary-color-dark);
+    font-size: 1.4em; /* Increased from 1.3em */
+    font-weight: 600;
+    border-bottom: none;
+    padding-bottom: 0;
+ }
+.passage-text-block h2 { /* Long passage titles */
+    margin-top: 0;
+    margin-bottom: 25px; /* Increased from 20px */
+    color: var(--primary-color-dark);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 18px; /* Increased from 15px */
+    font-size: 1.6em; /* Increased from 1.5em */
+    font-weight: 600;
+ }
+.passage-text-block p, .passage-text-block pre {
+    text-align: left;
+    margin-bottom: 1.5em;
+    font-size: 1.1em;
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    color: var(--text-color-primary);
+    line-height: 1.8;
+    overflow-wrap: break-word; /* Additional property for word wrapping */
+    max-width: 100%; /* Ensure content doesn't overflow container */
+}
+.passage-text-block .paragraph-marker {
+     font-weight: 700;
+     margin-right: 12px; /* Increased from 10px */
+     color: var(--text-color-secondary);
+}
+
+/* Question Area */
+.question-area {
+    flex: 1 1 50%; /* Equal space with passage */
+    padding: 40px; /* Keeping increased padding for better readability */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: var(--background-color);
+    height: 100%; /* Use full height of container */
+    max-width: 50%; /* Ensure it doesn't expand beyond half the container */
+    word-wrap: break-word; /* Ensure long words break and wrap */
+    position: absolute; /* Position absolutely */
+    right: 0; /* Align to right */
+    top: 0; /* Align to top */
+    bottom: 0; /* Stretch to bottom */
+    width: 50%; /* Set width to 50% */
+}
+.question-block {
+    margin-bottom: 35px; /* Increased from 30px */
+    padding: 32px; /* Increased padding for better use of horizontal space */
+    background-color: var(--content-background);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Enhanced shadow */
+    max-width: 100%; /* Allow questions to stretch to full width */
+    margin-left: auto; /* Center the question block */
+    margin-right: auto; /* Center the question block */
+}
+.question-block h3 { /* Question block title (e.g., Questions 1-5) */
+    margin-top: 0;
+    font-size: 1.35em; /* Increased from 1.25em */
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color-light);
+    padding-bottom: 15px; /* Increased from 12px */
+    margin-bottom: 22px; /* Increased from 20px */
+    font-weight: 600;
+}
+.question-block .instructions {
+    font-style: normal;
+    color: var(--text-color-secondary);
+    margin-bottom: 28px; /* Increased from 25px */
+    background-color: var(--primary-color-light);
+    padding: 18px 20px; /* Increased from 15px 18px */
+    border-left: 4px solid var(--primary-color);
+    border-radius: 4px;
+    font-size: 1em; /* Increased from 0.95em */
+    text-align: left; /* Ensure instructions text is left-aligned */
+    line-height: 1.6; /* Added for better readability */
+}
+.question-block .instructions ul { /* Ensure lists inside instructions are styled */
+    margin-top: 12px; /* Increased from 10px */
+    margin-bottom: 6px; /* Increased from 5px */
+    padding-left: 25px; /* Increased from 20px */
+}
+.question-block .instructions li {
+    margin-bottom: 8px; /* Increased from 5px */
+}
+
+
+.question {
+    margin-bottom: 25px; /* Increased from 20px */
+    padding-bottom: 20px; /* Increased from 15px */
+    border-bottom: 1px solid var(--border-color-light);
+    text-align: left; /* Ensure question text itself is left-aligned */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Added for hover effect */
+    padding: 15px 20px; /* Increased padding for better use of horizontal space */
+    border-radius: 8px; /* Increased rounded corners */
+    width: 100%; /* Ensure questions use available width */
+}
+.question:hover {
+    background-color: #fcfcff; /* Subtle hover background */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow on hover */
+}
+.question:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.question-number {
+    font-weight: 700; /* Increased from 600 */
+    margin-right: 12px; /* Increased from 10px */
+    color: var(--primary-color-dark); /* Changed color for emphasis */
+    display: inline-block;
+    min-width: 25px; /* Increased from 20px */
+    vertical-align: top; /* Align number with top of question text */
+    font-size: 1.05em; /* Added to make numbers stand out */
+}
+.question-text {
+   display: inline; /* Keep question text inline */
+   color: var(--text-color-primary);
+   vertical-align: baseline; /* Align with surrounding text */
+   font-size: 1.05em; /* Increased for better readability */
+   line-height: 1.6; /* Added for better readability */
+}
+
+/* --- Specific Question Type Styles --- */
+
+/* Options List (Radio/Checkbox) - UPDATED FOR ALIGNMENT */
+.options-list {
+    margin-top: 12px; /* Increased from 10px */
+    text-align: left; /* Ensure container is left-aligned */
+}
+.options-list label {
+    display: block; /* Each option on a new line */
+    text-align: left; /* Align text within label to left */
+    margin: 8px 0; /* Increased from 5px */
+    padding: 12px 18px; /* Increased from 10px 15px */
+    border-radius: 8px; /* Increased from 6px */
+    transition: all 0.2s ease-in-out;
+    border: 1px solid var(--border-color-light); /* Added visible border */
+    cursor: pointer;
+    position: relative;
+    background-color: #fafafa; /* Added subtle background */
+}
+.options-list label:hover {
+    background-color: var(--primary-color-light);
+    border-color: #c9d8f3; /* Border color change on hover */
+    transform: translateX(3px); /* Slight shift effect */
+}
+.options-list input[type="radio"],
+.options-list input[type="checkbox"] {
+    margin-right: 15px; /* Increased from 12px */
+    vertical-align: middle; /* Align input vertically */
+    accent-color: var(--primary-color);
+    width: 1.2em; /* Increased from 1.1em */
+    height: 1.2em; /* Increased from 1.1em */
+}
+
+/* Input Fields (Completion, Short Answer) - UPDATED TO BOX STYLE */
+.completion-input,
+.short-answer-input {
+    /* Remove previous border styles */
+    border-bottom: none;
+
+    /* Add box styles */
+    border: 1px solid var(--border-color); /* Standard border */
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 10px 14px; /* Increased from 8px 12px */
+    min-width: 200px; /* Increased from 180px */
+    font-family: inherit;
+    font-size: 1em; /* Increased from 0.95em */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    background-color: #fff; /* Ensure background is white */
+    margin: 0 10px; /* Increased from 8px */
+    vertical-align: baseline; /* Align better with surrounding text */
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+}
+
+/* Focus style for the new box look */
+.completion-input:focus,
+.short-answer-input:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Highlight focus */
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.15); /* Focus ring like other inputs */
+    background-color: #fff; /* Keep background white on focus */
+    transform: translateY(-2px); /* Slight lift on focus */
+}
+
+/* Specific adjustment for short answer to be block-level */
+.short-answer-input {
+    display: block; /* Make it take full width */
+    margin-top: 10px; /* Increased from 8px */
+    width: calc(100% - 30px); /* Adjusted width considering padding */
+    min-width: auto; /* Override min-width for block element */
+    margin-left: 0; /* Remove left margin for block */
+    margin-right: 0; /* Remove right margin for block */
+}
+
+.word-limit-note {
+     font-size: 0.9em;
+     color: var(--text-color-muted);
+     margin-left: 10px; /* Increased from 8px */
+     font-style: italic;
+     display: inline-block; /* Ensure it flows correctly */
+     background-color: #f8f9fa; /* Added subtle background */
+     padding: 2px 6px; /* Added padding */
+     border-radius: 4px; /* Rounded corners */
+}
+
+/* Ensure label for sentence completion allows inline input */
+.sentence-completion > label {
+    display: inline; /* Allow input to sit inline */
+}
+
+/* Matching Questions (Headings, Information) */
+.matching-item {
+     display: flex;
+     flex-wrap: wrap;
+     align-items: center;
+     margin-bottom: 18px; /* Increased from 15px */
+     padding: 12px; /* Increased from 8px 0 */
+     background-color: #fafafa; /* Added subtle background */
+     border-radius: 8px; /* Added rounded corners */
+     border: 1px solid var(--border-color-light); /* Added subtle border */
+ }
+.matching-item label {
+    margin-right: 18px; /* Increased from 15px */
+    margin-bottom: 6px; /* Increased from 5px */
+    font-weight: 500;
+ }
+.matching-item select, .matching-item input[type="text"] {
+     padding: 10px 14px; /* Increased from 8px 12px */
+     border: 1px solid var(--border-color);
+     border-radius: 6px;
+     font-size: 1em; /* Increased from 0.95em */
+     flex-grow: 1;
+     max-width: 250px; /* Increased from 220px */
+     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+ }
+.matching-item select:focus, .matching-item input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.15); /* Enhanced focus effect */
+      transform: translateY(-2px); /* Slight lift on focus */
+}
+
+/* Align label and select properly in matching information */
+.matching-information-new .matching-item {
+    align-items: flex-start; /* Align items to top */
+}
+.matching-information-new .matching-item label {
+    flex-shrink: 0; /* Prevent label from shrinking */
+    margin-right: 12px; /* Increased from 10px */
+}
+.matching-information-new .matching-item div { /* Container for text + select */
+    flex-grow: 1;
+}
+.matching-information-new .matching-item select {
+    display: block; /* Make select block-level within its container */
+    margin-top: 8px; /* Increased from 5px */
+    max-width: 180px; /* Increased from 150px */
+    margin-left: 0; /* Align left within its container */
+}
+
+
+ /* Options Box (Headings List etc.) */
+.options-box {
+     list-style-position: inside;
+     background-color: #f0f5ff; /* Changed from var(--background-color) for better contrast */
+     padding: 25px 30px; /* Increased from 20px 25px */
+     margin-bottom: 28px; /* Increased from 25px */
+     border-radius: var(--border-radius);
+     border: 1px solid #d0e0fd; /* Changed border color for better contrast */
+     text-align: left; /* Ensure content is left-aligned */
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Added subtle shadow */
+ }
+.options-box h4 { /* E.g., "List of Headings" */
+     margin-top: 0;
+     margin-bottom: 18px; /* Increased from 15px */
+     font-size: 1.15em; /* Increased from 1.1em */
+     font-weight: 600;
+     color: var(--primary-color-dark); /* Changed color for emphasis */
+     border-bottom: 1px solid #d0e0fd; /* Added subtle border */
+     padding-bottom: 10px; /* Added padding */
+ }
+.options-box ol, .options-box ul {
+    padding-left: 8px; /* Increased from 5px */
+    margin-bottom: 0;
+    color: var(--text-color-secondary);
+    list-style-type: none; /* Remove default list bullets/numbers */
+ }
+.options-box li {
+     margin-bottom: 10px; /* Increased from 8px */
+     padding: 5px 15px; /* Added top/bottom padding, kept left padding */
+     position: relative;
+     border-left: 3px solid transparent; /* Added for hover effect */
+     transition: all 0.2s ease;
+ }
+.options-box li:hover {
+     border-left-color: var(--primary-color); /* Added hover effect */
+     background-color: rgba(255, 255, 255, 0.6); /* Added hover background */
+     transform: translateX(3px); /* Slight shift on hover */
+}
+
+ /* Specific Matching Headings List styling */
+.matching-headings-json .options-box ul {
+    padding-left: 8px; /* Increased from 5px */
+    list-style-type: none;
+}
+.matching-headings-json .options-box li {
+    margin-bottom: 8px; /* Increased from 6px */
+    padding: 5px 0 5px 5px; /* Added vertical padding */
+}
+.matching-headings-json .matching-item label {
+    min-width: initial; /* Allow label width to be natural */
+}
+
+/* Loading/Error Styles */
+.loading-message, .error-message {
+    text-align: center;
+    padding: 50px; /* Increased from 40px */
+    font-size: 1.3em; /* Increased from 1.2em */
+    color: var(--text-color-secondary);
+}
+.error-message {
+    color: #dc3545; /* Bootstrap danger color */
+}
+
+/* Ensure bold tags are styled */
+strong {
+    font-weight: 700; /* Increased from 600 */
+    color: #0a0a0a; /* Darker color for better emphasis */
+}
+
+/* Add styles for warning/error messages within questions if needed */
+.question.warning, .question.error {
+    color: #dc3545; /* Example error color */
+    font-style: italic;
+    padding: 15px; /* Increased from 10px */
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Red border */
+    border-radius: 6px; /* Increased from 4px */
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.1); /* Added subtle shadow */
+}
+
+/* Results View Styling */
+.results-view {
+    max-width: 100%;
+    min-height: 100vh;
+    padding: 30px;
+    background-color: var(--background-color);
+    overflow-y: auto; /* Enable vertical scrolling */
+    position: relative; /* Add position relative */
+}
+
+.results-header {
+    margin-bottom: 20px;
+}
+
+.score-display, .detailed-feedback {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px; /* Add margin between sections */
+}
+
+.detailed-feedback {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+/* Improved Detailed Question Analysis Table Styling */
+.detailed-feedback .overflow-x-auto {
+    max-height: none; /* Remove max-height restriction */
+    overflow-y: visible; /* Allow content to flow naturally */
+    margin-bottom: 2rem; /* Add space for the buttons */
+}
+
+.detailed-feedback table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.detailed-feedback th {
+    background-color: #ebf4ff;
+    color: #4a5568;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 2px solid #cbd5e0;
+}
+
+.detailed-feedback td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detailed-feedback tr:last-child td {
+    border-bottom: none;
+}
+
+.detailed-feedback tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.detailed-feedback tr:hover {
+    background-color: #f0f4f8;
+}
+
+/* Status Button Styling */
+.detailed-feedback .inline-flex {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.detailed-feedback .bg-green-100 {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.detailed-feedback .bg-red-100 {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+/* Style for fixed action buttons */
+.action-buttons-container {
+    position: sticky;
+    bottom: 20px;
+    background-color: var(--background-color);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    width: fit-content;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transition: all 0.3s ease;
+}
+
+/* Style the scrollbar for better visibility */
+.detailed-feedback .overflow-x-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.detailed-feedback .overflow-x-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.detailed-feedback .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.detailed-feedback .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Custom scrollbar styling for the results table */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/* Ensure all strong tags and bolded elements are consistently bold */
+strong, 
+b, 
+.font-bold, 
+.font-semibold,
+.instructions strong {
+    font-weight: 700 !important; /* Use !important to override any conflicting styles */
+}
+
+/* Ensure paragraph markers and headers are consistently bold */
+.paragraph-marker,
+.question-block h3,
+.passage-text-block h2,
+.passage-text-block h3 {
+    font-weight: 700 !important;
+}
+
+/* Ensure headers in section 3 are bold */
+.passage-text-block strong {
+    font-weight: 700 !important;
+    display: inline-block; /* Ensure they display properly */
+}
+
+.matching-headings-json .options-box h4,
+.options-box h4 {
+    font-weight: 700;
+    color: var(--primary-color-dark);
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.matching-headings-json .options-box ul,
+.options-box ul {
+    list-style-type: none;
+    padding-left: 10px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.matching-headings-json .options-box li,
+.options-box li {
+    font-weight: 600; /* Ensure list items are bold */
+    padding: 8px 5px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+/* Styling for paragraph selection dropdown */
+.paragraph-select {
+  margin-left: 10px;
+  padding: 8px 12px;
+  display: block;
+  margin-top: 8px;
+  width: 180px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: white;
+  font-size: 1em;
+  color: var(--text-color-primary);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paragraph-select:hover {
+  border-color: var(--primary-color-light);
+}
+
+.paragraph-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2);
+  outline: none;
+}
+
+.paragraph-select option {
+  padding: 8px;
+}
+
+/* Ensure option text is clearly visible */
+.paragraph-select option:not(:first-child) {
+  font-weight: 500;
+}
+
+/* Button Container - New style for buttons outside containers */
+.exam-buttons-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 0;
+  background-color: var(--content-background);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.exam-buttons-container button {
+  margin: 0 10px;
+  font-size: 1.1em;
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+}

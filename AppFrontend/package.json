@@ -1,0 +1,49 @@
+{
+  "name": "ielts-practice-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "rm -rf .vite && vite",
+    "dev:clean": "rm -rf node_modules/.vite* dist .vite node_modules/.vite-fresh-cache && vite --force",
+    "dev:no-sw": "echo '🛡️ Starting without service workers...' && rm -rf .vite && vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.1",
+    "@mui/material": "^7.1.0",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-radio-group": "^1.1.3",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "firebase": "^11.8.1",
+    "framer-motion": "^12.7.4",
+    "lucide-react": "^0.363.0",
+    "react": "^18.3.1",
+    "react-confetti": "^6.1.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.23.0",
+    "tailwind-merge": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "react-refresh": "^0.17.0",
+    "rollup": "^4.39.0",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.4.19"
+  }
+}

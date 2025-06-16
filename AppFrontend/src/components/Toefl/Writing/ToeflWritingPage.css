@@ -1,0 +1,566 @@
+/* ToeflWritingPage.css */
+
+.toefl-writing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Enhanced Typography */
+.text-gradient {
+  background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Card and Layout Styles */
+.task-header-container {
+  background-image: linear-gradient(to right, rgba(219, 234, 254, 0.5), rgba(199, 210, 254, 0.3));
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.task-header-container:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem;
+  color: #4b5563;
+}
+
+.timer-icon {
+  margin-right: 0.25rem;
+}
+
+.reading-lecture-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .reading-lecture-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card-container {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: 500px;
+  overflow: auto;
+  transition: all 0.3s ease;
+}
+
+.card-container:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.card-content {
+  white-space: pre-line;
+}
+
+.prompt-container {
+  padding: 1rem;
+  background-color: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 0.375rem;
+  margin-bottom: 1.5rem;
+}
+
+.prompt-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.prompt-details {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.prompt-note {
+  margin-top: 0.5rem;
+  font-weight: 500;
+  color: #b45309;
+}
+
+.response-container {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.response-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.response-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.word-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+}
+
+.response-textarea {
+  width: 100%;
+  height: 300px;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  resize: none;
+}
+
+.response-textarea:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
+}
+
+.discussion-container {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.discussion-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 1rem;
+}
+
+.post {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+
+.instructor-avatar {
+  background-color: #2563eb;
+}
+
+.student-avatar {
+  background-color: #059669;
+}
+
+.post-author {
+  margin-left: 0.75rem;
+}
+
+.author-name {
+  font-weight: 600;
+}
+
+.topic {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.post-content {
+  white-space: pre-line;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+}
+
+/* Enhanced Loading Spinner */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px solid rgba(59, 130, 246, 0.1);
+  border-top-color: #3b82f6;
+  animation: spinner 1s linear infinite;
+  position: relative;
+}
+
+.loading-spinner::before,
+.loading-spinner::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.loading-spinner::before {
+  width: 46px;
+  height: 46px;
+  border: 3px solid rgba(79, 70, 229, 0.1);
+  border-top-color: #4f46e5;
+  animation: spinner 1.2s linear infinite reverse;
+}
+
+.loading-spinner::after {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(99, 102, 241, 0.1);
+  border-top-color: #6366f1;
+  animation: spinner 0.8s linear infinite;
+}
+
+.submitting-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px solid rgba(16, 185, 129, 0.1);
+  border-top-color: #10b981;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.error-icon {
+  width: 4rem;
+  height: 4rem;
+  background-color: #fee2e2;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+}
+
+.error-message {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.error-details {
+  color: #6b7280;
+}
+
+/* Enhanced Countdown Animation Styles */
+.countdown-animation {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Floating particles background */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.floating-particle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background-color: rgba(59, 130, 246, var(--opacity));
+  border-radius: 50%;
+  animation: float var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+  opacity: var(--opacity);
+}
+
+@keyframes float {
+  0% {
+    transform: translate(var(--x-start), var(--y-start));
+  }
+  50% {
+    transform: translate(var(--x-end), var(--y-end));
+  }
+  100% {
+    transform: translate(var(--x-start), var(--y-start));
+  }
+}
+
+.countdown-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: rotate 10s linear infinite;
+}
+
+.countdown-ring-1 {
+  animation-duration: 10s;
+}
+
+.countdown-ring-2 {
+  animation-duration: 15s;
+  animation-direction: reverse;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.countdown-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.countdown-dot-alt {
+  background-color: #6366f1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.countdown-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #60a5fa;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.countdown-number-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+  border-radius: 50%;
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.countdown-number {
+  font-size: 80px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.countdown-go {
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #047857, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: zoomIn 0.5s ease-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.countdown-message {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #4b5563;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Breathing guide animation */
+.breathing-guide {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breathing-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #60a5fa, #3b82f6);
+  animation: breatheCircle 4s ease-in-out infinite;
+}
+
+@keyframes breatheCircle {
+  0%, 100% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.breathing-text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #6b7280;
+  opacity: 0.8;
+}
+
+.breath-text {
+  animation: breathe 4s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Writing Task Styles */
+textarea {
+  transition: all 0.3s ease;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+} 

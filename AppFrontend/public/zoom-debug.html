@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <title>Zoom Debug Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+            margin: 0;
+            font-size: 16px !important;
+        }
+        .debug-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .debug-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+        .debug-item.error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .debug-item.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px !important;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        input {
+            font-size: 16px !important;
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-input {
+            width: 100%;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>Zoom Prevention Debug Tool</h1>
+        <p>This tool helps you verify that zoom prevention is working correctly.</p>
+        
+        <div id="debug-output"></div>
+        
+        <h3>Tests:</h3>
+        <button onclick="testViewport()">Test Viewport Settings</button>
+        <button onclick="testZoomLevel()">Test Zoom Level</button>
+        <button onclick="testDevicePixelRatio()">Test Device Pixel Ratio</button>
+        <button onclick="testTransform()">Test Transform Scale</button>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="forceZoomReset()">Force Zoom Reset</button>
+        
+        <h3>Input Test (should not zoom on focus on iOS):</h3>
+        <input type="text" class="test-input" placeholder="Type here - should not zoom on focus">
+        <input type="email" class="test-input" placeholder="Email input test">
+        
+        <h3>Manual Tests:</h3>
+        <ul>
+            <li>Try pinch to zoom (should not work)</li>
+            <li>Try double tap to zoom (should not work)</li>
+            <li>Try Ctrl/Cmd + Plus/Minus (should be prevented)</li>
+            <li>Focus on input fields (should not zoom on mobile)</li>
+        </ul>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('debug-output');
+            const div = document.createElement('div');
+            div.className = `debug-item ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}:</strong> ${message}`;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function testViewport() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                const content = viewport.getAttribute('content');
+                log(`Viewport content: ${content}`, 'info');
+                
+                if (content.includes('user-scalable=no') && content.includes('maximum-scale=1.0')) {
+                    log('✓ Viewport configured correctly for zoom prevention', 'success');
+                } else {
+                    log('✗ Viewport may not be configured correctly', 'error');
+                }
+            } else {
+                log('✗ No viewport meta tag found', 'error');
+            }
+        }
+
+        function testZoomLevel() {
+            const htmlZoom = getComputedStyle(document.documentElement).zoom;
+            const bodyZoom = getComputedStyle(document.body).zoom;
+            
+            log(`HTML zoom level: ${htmlZoom || 'not set'}`, htmlZoom === '1' ? 'success' : 'error');
+            log(`Body zoom level: ${bodyZoom || 'not set'}`, bodyZoom === '1' ? 'success' : 'error');
+            
+            // Check for transform scale
+            const htmlTransform = getComputedStyle(document.documentElement).transform;
+            const bodyTransform = getComputedStyle(document.body).transform;
+            
+            log(`HTML transform: ${htmlTransform}`, htmlTransform === 'none' ? 'success' : 'info');
+            log(`Body transform: ${bodyTransform}`, bodyTransform === 'none' ? 'success' : 'info');
+        }
+
+        function testDevicePixelRatio() {
+            const dpr = window.devicePixelRatio || 1;
+            log(`Device Pixel Ratio: ${dpr}`, 'info');
+            
+            if (dpr === 1) {
+                log('✓ Device pixel ratio is 1 (no scaling)', 'success');
+            } else {
+                log(`Device has ${dpr}x scaling - this is normal for high-DPI displays`, 'info');
+            }
+        }
+
+        function testTransform() {
+            const elements = [document.documentElement, document.body, document.getElementById('root')];
+            elements.forEach((el, index) => {
+                if (el) {
+                    const name = ['HTML', 'BODY', 'ROOT'][index];
+                    const transform = getComputedStyle(el).transform;
+                    const webkitTransform = getComputedStyle(el).webkitTransform;
+                    
+                    log(`${name} transform: ${transform}`, transform === 'none' ? 'success' : 'info');
+                    if (webkitTransform && webkitTransform !== transform) {
+                        log(`${name} webkit-transform: ${webkitTransform}`, webkitTransform === 'none' ? 'success' : 'info');
+                    }
+                }
+            });
+        }
+
+        function runAllTests() {
+            log('=== Running all tests ===', 'info');
+            testViewport();
+            testZoomLevel();
+            testDevicePixelRatio();
+            testTransform();
+            log('=== Tests completed ===', 'info');
+        }
+
+        function forceZoomReset() {
+            try {
+                if (window.simpleZoomReset) {
+                    window.simpleZoomReset();
+                    log('✓ Executed simpleZoomReset function', 'success');
+                } else {
+                    // Manual reset
+                    document.documentElement.style.zoom = '1';
+                    document.documentElement.style.transform = 'none';
+                    document.body.style.zoom = '1';
+                    document.body.style.transform = 'none';
+                    log('✓ Manually reset zoom properties', 'success');
+                }
+            } catch (e) {
+                log(`✗ Error resetting zoom: ${e.message}`, 'error');
+            }
+        }
+
+        // Auto-run basic tests on load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Zoom Debug Tool loaded', 'info');
+            runAllTests();
+        });
+
+        // Monitor for zoom changes
+        let lastWidth = window.innerWidth;
+        setInterval(function() {
+            const currentWidth = window.innerWidth;
+            if (Math.abs(currentWidth - lastWidth) > 50) {
+                log(`Window width changed: ${lastWidth} → ${currentWidth}`, 'info');
+                lastWidth = currentWidth;
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 

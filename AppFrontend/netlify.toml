@@ -1,0 +1,104 @@
+[build]
+  publish = "dist"
+  command = "npm ci --include=dev && npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  GENERATE_SOURCEMAP = "false"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+
+# Headers for consistent rendering and security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Prevent zoom issues on mobile - Updated CSP to properly allow Material Icons
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://www.gstatic.com https://securetoken.googleapis.com https://www.googleapis.com https://www.googletagmanager.com https://accounts.google.com https://ssl.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com data:; img-src 'self' data: https: https://lh3.googleusercontent.com; media-src 'self' https://d1amthtlzl7wnp.cloudfront.net https://dsvgkefmgad9s.cloudfront.net; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com https://generativelanguage.googleapis.com https://api.deepseek.com https://yeo707lcq4.execute-api.us-east-1.amazonaws.com https://8l1em9gvy7.execute-api.us-east-1.amazonaws.com https://80yhq8e9rl.execute-api.us-east-1.amazonaws.com https://h5gf4jspy7.execute-api.us-east-1.amazonaws.com https://llf5fa83b8.execute-api.us-east-1.amazonaws.com https://xguxnr9iu0.execute-api.us-east-1.amazonaws.com https://fesix53cz3.execute-api.us-east-1.amazonaws.com https://r55vpkomzf.execute-api.us-east-1.amazonaws.com https://q96vyw8ux1.execute-api.us-east-1.amazonaws.com https://d1amthtlzl7wnp.cloudfront.net https://region1.google-analytics.com https://www.google-analytics.com https://fonts.googleapis.com https://accounts.google.com https://www.googletagmanager.com https://ssl.gstatic.com https://jjsmfiikybhgha37vrlcpipu2y.appsync-api.us-east-1.amazonaws.com https://cognito-idp.us-east-1.amazonaws.com; frame-src 'self' https://spinta-84f45.firebaseapp.com https://accounts.google.com https://content.googleapis.com; object-src 'none';"
+    # Additional headers for zoom prevention
+    X-UA-Compatible = "IE=edge"
+    X-Viewport-Scale = "1.0"
+    X-Device-Scale = "1.0"
+    
+# Headers specifically for HTML files to ensure proper viewport handling
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Viewport-Scale = "1.0"
+    X-Device-Scale = "1.0"
+    X-Initial-Scale = "1.0"
+    X-Maximum-Scale = "1.0"
+    X-Minimum-Scale = "1.0"
+    X-User-Scalable = "no"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Firebase auth reverse proxy - MUST come before SPA fallback
+[[redirects]]
+  from = "/__/auth/*"
+  to = "https://spinta-84f45.firebaseapp.com/__/auth/:splat"
+  status = 200
+
+# Firebase init.json proxy
+[[redirects]]
+  from = "/__/firebase/init.json"
+  to = "https://spinta-84f45.firebaseapp.com/__/firebase/init.json"
+  status = 200
+
+# SPA fallback for React Router - MUST be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optimize build
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+
+
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    # Your existing headers...
+    
+# Add snippet injection for zoom fix
+[[snippets]]
+  for = "/*"
+  [snippets.html]
+    head = '''
+    <style>
+      /* Production zoom fix */
+      @media screen and (min-width: 1024px) {
+        html:not([data-localhost]) {
+          zoom: 0.75;
+          -moz-transform: scale(0.75);
+          -moz-transform-origin: 0 0;
+        }
+      }
+    </style>
+    <script>
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        document.documentElement.setAttribute('data-localhost', 'true');
+      }
+    </script>
+    '''
+
+
+    
+# Environment variables for consistent builds (merged with the build.environment section above) 
