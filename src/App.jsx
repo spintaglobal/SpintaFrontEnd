@@ -140,7 +140,7 @@ const ExamTypePage = () => {
     {
       id: 'ielts',
       name: 'IELTS',
-      fullName: 'International English Language Testing System',
+      fullName: 'International English Language Testing System Online',
       icon: 'school',
       description: 'Globally recognized English proficiency test',
       color: 'from-cyan-500 to-cyan-700',
